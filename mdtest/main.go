@@ -28,15 +28,15 @@ import (
 	"github.com/mdp/qrterminal/v3"
 	"google.golang.org/protobuf/proto"
 
-	"go.mau.fi/whatsmeow"
-	"go.mau.fi/whatsmeow/appstate"
-	waBinary "go.mau.fi/whatsmeow/binary"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/store"
-	"go.mau.fi/whatsmeow/store/sqlstore"
-	"go.mau.fi/whatsmeow/types"
-	"go.mau.fi/whatsmeow/types/events"
-	waLog "go.mau.fi/whatsmeow/util/log"
+	"github.com/rsanjuan87/whatsmeow"
+	"github.com/rsanjuan87/whatsmeow/appstate"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/store/sqlstore"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
+	waLog "github.com/rsanjuan87/whatsmeow/util/log"
 )
 
 var cli *whatsmeow.Client
