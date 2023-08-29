@@ -20,6 +20,10 @@ import (
 	"go.mau.fi/libsignal/protocol"
 	"google.golang.org/protobuf/proto"
 
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 	waBinary "go.mau.fi/whatsmeow/binary"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"

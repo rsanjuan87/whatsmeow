@@ -9,6 +9,7 @@ package types
 import (
 	"time"
 
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	"github.com/rsanjuan87/whatsmeow/proto/waVnameCert"
 )
 

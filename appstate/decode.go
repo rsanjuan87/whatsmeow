@@ -17,7 +17,7 @@ import (
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
-	"go.mau.fi/whatsmeow/proto/waSyncAction"
+	"github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
 	"github.com/rsanjuan87/whatsmeow/store"
 	"github.com/rsanjuan87/whatsmeow/util/cbcutil"
 )

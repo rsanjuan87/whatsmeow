@@ -12,6 +12,9 @@ import (
 	"github.com/rsanjuan87/whatsmeow/appstate"
 	"github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
 	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/appstate"
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/types"
 )
 
 // Contact is emitted when an entry in the user's contact list is modified from another device.

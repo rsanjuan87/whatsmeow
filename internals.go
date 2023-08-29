@@ -12,6 +12,8 @@ import (
 	"net/http"
 	"time"
 
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	"github.com/rsanjuan87/whatsmeow/types"
 	"go.mau.fi/libsignal/keys/prekey"
 
 	"go.mau.fi/whatsmeow/appstate"

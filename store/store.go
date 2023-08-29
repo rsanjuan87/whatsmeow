@@ -11,6 +11,10 @@ import (
 	"context"
 	"time"
 
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/util/keys"
+	waLog "github.com/rsanjuan87/whatsmeow/util/log"
 	"github.com/google/uuid"
 
 	"github.com/rsanjuan87/whatsmeow/proto/waAdv"

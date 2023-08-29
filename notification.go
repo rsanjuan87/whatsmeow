@@ -12,6 +12,11 @@ import (
 	"errors"
 	"slices"
 
+	"github.com/rsanjuan87/whatsmeow/appstate"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 	"google.golang.org/protobuf/proto"
 
 	"github.com/rsanjuan87/whatsmeow/appstate"
