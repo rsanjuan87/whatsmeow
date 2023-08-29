@@ -23,17 +23,18 @@ import (
 	"go.mau.fi/util/random"
 	"golang.org/x/net/proxy"
 
-	"go.mau.fi/whatsmeow/appstate"
-	waBinary "go.mau.fi/whatsmeow/binary"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/appstate"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waWeb"
-	"go.mau.fi/whatsmeow/socket"
-	"go.mau.fi/whatsmeow/store"
-	"go.mau.fi/whatsmeow/types"
-	"go.mau.fi/whatsmeow/types/events"
-	"go.mau.fi/whatsmeow/util/keys"
-	waLog "go.mau.fi/whatsmeow/util/log"
+	"github.com/rsanjuan87/whatsmeow/socket"
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
+	"github.com/rsanjuan87/whatsmeow/util/keys"
+	waLog "github.com/rsanjuan87/whatsmeow/util/log"
+
 )
 
 // EventHandler is a function that can handle events from WhatsApp.
