@@ -18,6 +18,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/util/keys"
 	"go.mau.fi/util/dbutil"
 	"go.mau.fi/util/exsync"
 

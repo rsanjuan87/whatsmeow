@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"time"
 
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	waBinary "go.mau.fi/whatsmeow/binary"
 	armadillo "go.mau.fi/whatsmeow/proto"
 	"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload"
@@ -21,6 +23,7 @@ import (
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
 	"go.mau.fi/whatsmeow/proto/waMsgApplication"
 	"go.mau.fi/whatsmeow/proto/waMsgTransport"
+	"github.com/rsanjuan87/whatsmeow/types"
 	"go.mau.fi/whatsmeow/proto/waWeb"
 	"go.mau.fi/whatsmeow/types"
 )

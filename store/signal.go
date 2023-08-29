@@ -17,6 +17,8 @@ import (
 	"go.mau.fi/libsignal/serialize"
 	"go.mau.fi/libsignal/state/record"
 	"go.mau.fi/libsignal/state/store"
+
+	"github.com/rsanjuan87/whatsmeow/util/keys"
 )
 
 var SignalProtobufSerializer = serialize.NewProtoBufSerializer()

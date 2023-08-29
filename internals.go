@@ -15,7 +15,7 @@ import (
 	"go.mau.fi/libsignal/keys/prekey"
 
 	"go.mau.fi/whatsmeow/appstate"
-	waBinary "go.mau.fi/whatsmeow/binary"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"go.mau.fi/whatsmeow/proto/waCommon"
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
@@ -25,7 +25,7 @@ import (
 	"go.mau.fi/whatsmeow/socket"
 	"go.mau.fi/whatsmeow/store"
 	"go.mau.fi/whatsmeow/types"
-	"go.mau.fi/whatsmeow/types/events"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 	"go.mau.fi/whatsmeow/util/keys"
 )
 

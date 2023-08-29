@@ -15,11 +15,11 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	waBinary "go.mau.fi/whatsmeow/binary"
-	"go.mau.fi/whatsmeow/proto/waServerSync"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
 	"go.mau.fi/whatsmeow/proto/waSyncAction"
-	"go.mau.fi/whatsmeow/store"
-	"go.mau.fi/whatsmeow/util/cbcutil"
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/util/cbcutil"
 )
 
 // PatchList represents a decoded response to getting app state patches from the WhatsApp servers.

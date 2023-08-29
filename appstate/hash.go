@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"hash"
 
-	"go.mau.fi/whatsmeow/appstate/lthash"
-	"go.mau.fi/whatsmeow/proto/waServerSync"
+	"github.com/rsanjuan87/whatsmeow/appstate/lthash"
+	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
 	"go.mau.fi/whatsmeow/proto/waSyncAction"
 )
 
