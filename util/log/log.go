@@ -15,19 +15,19 @@ import (
 
 // Logger is a simple logger interface that can have subloggers for specific areas.
 type Logger interface {
-	Warnf(msg string, fun *func(msg ...string), args ...interface{})
-	Errorf(msg string, fun *func(msg ...string), args ...interface{})
-	Infof(msg string, fun *func(msg ...string), args ...interface{})
-	Debugf(msg string, fun *func(msg ...string), args ...interface{})
+	Warnf(msg string, args ...interface{})
+	Errorf(msg string, args ...interface{})
+	Infof(msg string, args ...interface{})
+	Debugf(msg string, args ...interface{})
 	Sub(module string) Logger
 }
 type noopLogger struct{}
 
-func (n *noopLogger) Errorf(_ string, _ *func(msg ...string), _ ...interface{}) {}
-func (n *noopLogger) Warnf(_ string, _ *func(msg ...string), _ ...interface{})  {}
-func (n *noopLogger) Infof(_ string, _ *func(msg ...string), _ ...interface{})  {}
-func (n *noopLogger) Debugf(_ string, _ *func(msg ...string), _ ...interface{}) {}
-func (n *noopLogger) Sub(_ string) Logger                                       { return n }
+func (n *noopLogger) Errorf(_ string, _ ...interface{}) {}
+func (n *noopLogger) Warnf(_ string, _ ...interface{})  {}
+func (n *noopLogger) Infof(_ string, _ ...interface{})  {}
+func (n *noopLogger) Debugf(_ string, _ ...interface{}) {}
+func (n *noopLogger) Sub(_ string) Logger               { return n }
 
 // Noop is a no-op Logger implementation that silently drops everything.
 var Noop Logger = &noopLogger{}
@@ -53,7 +53,7 @@ var levelToInt = map[string]int{
 	"ERROR": 3,
 }
 
-func (s *stdoutLogger) outputf(level, msg string, fun *func(msg ...string), args ...interface{}) {
+func (s *stdoutLogger) outputf(level, msg string, args ...interface{}) {
 	if levelToInt[level] < s.min {
 		return
 	}
