@@ -19,7 +19,7 @@ type Logger interface {
 	Errorf(msg string, fun *func(msg ...string), args ...interface{})
 	Infof(msg string, fun *func(msg ...string), args ...interface{})
 	Debugf(msg string, fun *func(msg ...string), args ...interface{})
-	Sub(module string, fun *func(msg ...string)) Logger
+	Sub(module string) Logger
 }
 type noopLogger struct{}
 
@@ -27,7 +27,7 @@ func (n *noopLogger) Errorf(_ string, _ *func(msg ...string), _ ...interface{}) 
 func (n *noopLogger) Warnf(_ string, _ *func(msg ...string), _ ...interface{})  {}
 func (n *noopLogger) Infof(_ string, _ *func(msg ...string), _ ...interface{})  {}
 func (n *noopLogger) Debugf(_ string, _ *func(msg ...string), _ ...interface{}) {}
-func (n *noopLogger) Sub(_ string, fun *func(msg ...string)) Logger             { return n }
+func (n *noopLogger) Sub(_ string) Logger                                       { return n }
 
 // Noop is a no-op Logger implementation that silently drops everything.
 var Noop Logger = &noopLogger{}
