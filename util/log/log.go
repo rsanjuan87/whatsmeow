@@ -63,7 +63,8 @@ func (s *stdoutLogger) outputf(level, msg string, args ...interface{}) {
 		colorReset = "\033[0m"
 	}
 	if s.fun != nil {
-		(*s.fun)("%s%s [%s %s] %s%s\n", time.Now().Format("15:04:05.000"), colorStart, s.mod, level, fmt.Sprintf(msg, args...), colorReset)
+		(*s.fun)(
+			fmt.Sprintf("%s%s [%s %s] %s%s\n", time.Now().Format("15:04:05.000"), colorStart, s.mod, level, fmt.Sprintf(msg, args...), colorReset))
 	} else {
 		fmt.Printf("%s%s [%s %s] %s%s\n", time.Now().Format("15:04:05.000"), colorStart, s.mod, level, fmt.Sprintf(msg, args...), colorReset)
 	}
