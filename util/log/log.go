@@ -91,6 +91,6 @@ func (s *stdoutLogger) Sub(mod string, fun *func(msg ...string)) Logger {
 // minLevel specifies the minimum log level to output. An empty string will output all logs.
 //
 // If color is true, then info, warn and error logs will be colored cyan, yellow and red respectively using ANSI color escape codes.
-func Stdout(module string, minLevel string, color bool) Logger {
-	return &stdoutLogger{mod: module, color: color, min: levelToInt[strings.ToUpper(minLevel)]}
+func Stdout(module string, minLevel string, color bool, fun *func(msg ...string)) Logger {
+	return &stdoutLogger{mod: module, color: color, min: levelToInt[strings.ToUpper(minLevel)], fun: fun}
 }
