@@ -72,6 +72,7 @@ message DeviceProps {
         optional bool inlineInitialPayloadInE2EeMsg = 4;
         optional uint32 recentSyncDaysLimit = 5;
         optional bool supportCallLogHistory = 6;
+        optional bool supportBotUserAgentChatHistory = 7;
     }
     
     message AppVersion {
@@ -385,7 +386,16 @@ message ExtendedTextMessage {
     optional bytes inviteLinkParentGroupThumbnailV2 = 28;
     optional InviteLinkGroupType inviteLinkGroupTypeV2 = 29;
     optional bool viewOnce = 30;
-    optional string thumbnailCdnUrl = 31;
+}
+
+message EventMessage {
+    optional ContextInfo contextInfo = 1;
+    optional bool isCanceled = 2;
+    optional string name = 3;
+    optional string description = 4;
+    optional LocationMessage location = 5;
+    optional string joinLink = 6;
+    optional int64 startTime = 7;
 }
 
 message EncReactionMessage {
@@ -556,11 +566,24 @@ message BotFeedbackMessage {
         BOT_FEEDBACK_NEGATIVE_ACCURATE = 4;
         BOT_FEEDBACK_NEGATIVE_SAFE = 5;
         BOT_FEEDBACK_NEGATIVE_OTHER = 6;
-        BOT_FEEDBACK_NEGATIVE_CAUTIOUS = 7;
+        BOT_FEEDBACK_NEGATIVE_REFUSED = 7;
+        BOT_FEEDBACK_NEGATIVE_NOT_VISUALLY_APPEALING = 8;
+        BOT_FEEDBACK_NEGATIVE_NOT_RELEVANT_TO_TEXT = 9;
     }
     optional MessageKey messageKey = 1;
     optional BotFeedbackKind kind = 2;
     optional string text = 3;
+}
+
+message BCallMessage {
+    enum MediaType {
+        UNKNOWN = 0;
+        AUDIO = 1;
+        VIDEO = 2;
+    }
+    optional string sessionId = 1;
+    optional MediaType mediaType = 2;
+    optional bytes masterKey = 3;
 }
 
 message AudioMessage {
@@ -637,6 +660,7 @@ message HydratedTemplateButton {
     message HydratedURLButton {
         optional string displayText = 1;
         optional string url = 2;
+        optional string consentedUsersUrl = 3;
     }
     
     message HydratedQuickReplyButton {
@@ -677,6 +701,7 @@ message DisappearingMode {
     optional Initiator initiator = 1;
     optional Trigger trigger = 2;
     optional string initiatorDeviceJid = 3;
+    optional bool initiatedByMe = 4;
 }
 
 message DeviceListMetadata {
@@ -720,6 +745,10 @@ message ContextInfo {
         optional bool showAdAttribution = 12;
         optional string ctwaClid = 13;
         optional string ref = 14;
+    }
+    
+    message DataSharingContext {
+        optional bool showMmDisclosure = 1;
     }
     
     message BusinessMessageForwardInfo {
@@ -770,13 +799,24 @@ message ContextInfo {
     optional BusinessMessageForwardInfo businessMessageForwardInfo = 44;
     optional string smbClientCampaignId = 45;
     optional string smbServerCampaignId = 46;
+    optional DataSharingContext dataSharingContext = 47;
 }
 
 message BotPluginMetadata {
     enum SearchProvider {
         BING = 1;
+        GOOGLE = 2;
+    }
+    enum PluginType {
+        REELS = 1;
+        SEARCH = 2;
     }
     optional SearchProvider provider = 1;
+    optional PluginType pluginType = 2;
+    optional string thumbnailCdnUrl = 3;
+    optional string profilePhotoCdnUrl = 4;
+    optional string searchProviderUrl = 5;
+    optional uint32 referenceIndex = 6;
 }
 
 message BotMetadata {
@@ -918,8 +958,13 @@ message Message {
     optional ScheduledCallEditMessage scheduledCallEditMessage = 65;
     optional VideoMessage ptvMessage = 66;
     optional FutureProofMessage botInvokeMessage = 67;
-    optional EncCommentMessage encCommentMessage = 68;
     optional CallLogMessage callLogMesssage = 69;
+    optional MessageHistoryBundle messageHistoryBundle = 70;
+    optional EncCommentMessage encCommentMessage = 71;
+    optional BCallMessage bcallMessage = 72;
+    optional FutureProofMessage commentMessage = 73;
+    optional FutureProofMessage lottieStickerMessage = 74;
+    optional EventMessage eventMessage = 75;
 }
 
 message MessageSecretMessage {
@@ -1126,6 +1171,7 @@ message ProtocolMessage {
     optional PeerDataOperationRequestMessage peerDataOperationRequestMessage = 16;
     optional PeerDataOperationRequestResponseMessage peerDataOperationRequestResponseMessage = 17;
     optional BotFeedbackMessage botFeedbackMessage = 18;
+    optional string invokerJid = 19;
 }
 
 message ProductMessage {
@@ -1305,6 +1351,19 @@ message OrderMessage {
     optional int64 totalAmount1000 = 10;
     optional string totalCurrencyCode = 11;
     optional ContextInfo contextInfo = 17;
+    optional int32 messageVersion = 12;
+    optional MessageKey orderRequestMessageId = 13;
+}
+
+message MessageHistoryBundle {
+    optional string mimetype = 2;
+    optional bytes fileSha256 = 3;
+    optional bytes mediaKey = 5;
+    optional bytes fileEncSha256 = 6;
+    optional string directPath = 7;
+    optional int64 mediaKeyTimestamp = 8;
+    optional ContextInfo contextInfo = 9;
+    repeated string participants = 10;
 }
 
 message LocationMessage {
@@ -1352,6 +1411,16 @@ message ListResponseMessage {
 }
 
 message ListMessage {
+    message ProductListHeaderImage {
+        optional string productId = 1;
+        optional bytes jpegThumbnail = 2;
+    }
+    
+    enum ListType {
+        UNKNOWN = 0;
+        SINGLE_SELECT = 1;
+        PRODUCT_LIST = 2;
+    }
     message Section {
         optional string title = 1;
         repeated Row rows = 2;
@@ -1378,16 +1447,6 @@ message ListMessage {
         optional string businessOwnerJid = 3;
     }
     
-    message ProductListHeaderImage {
-        optional string productId = 1;
-        optional bytes jpegThumbnail = 2;
-    }
-    
-    enum ListType {
-        UNKNOWN = 0;
-        SINGLE_SELECT = 1;
-        PRODUCT_LIST = 2;
-    }
     optional string title = 1;
     optional string description = 2;
     optional string buttonText = 3;
@@ -1466,6 +1525,10 @@ message HistorySync {
         NON_BLOCKING_DATA = 5;
         ON_DEMAND = 6;
     }
+    enum BotAIWaitListState {
+        IN_WAITLIST = 0;
+        AI_AVAILABLE = 1;
+    }
     required HistorySyncType syncType = 1;
     repeated Conversation conversations = 2;
     repeated WebMessageInfo statusV3Messages = 3;
@@ -1478,6 +1541,7 @@ message HistorySync {
     repeated StickerMetadata recentStickers = 11;
     repeated PastParticipants pastParticipants = 12;
     repeated CallLogRecord callLogRecords = 13;
+    optional BotAIWaitListState aiWaitListState = 14;
 }
 
 message HistorySyncMsg {
@@ -1564,6 +1628,8 @@ message Conversation {
     optional bool shareOwnPn = 40;
     optional bool pnhDuplicateLidThread = 41;
     optional string lidJid = 42;
+    optional string username = 43;
+    optional string lidOriginType = 44;
 }
 
 message AvatarUserSettings {
@@ -1714,6 +1780,7 @@ message SyncActionValue {
     optional ExternalWebBetaAction externalWebBetaAction = 40;
     optional PrivacySettingRelayAllCalls privacySettingRelayAllCalls = 41;
     optional CallLogAction callLogAction = 42;
+    optional StatusPrivacyAction statusPrivacy = 44;
 }
 
 message UserStatusMuteAction {
@@ -1756,6 +1823,16 @@ message StickerAction {
     optional uint64 fileLength = 8;
     optional bool isFavorite = 9;
     optional uint32 deviceIdHint = 10;
+}
+
+message StatusPrivacyAction {
+    enum StatusDistributionMode {
+        ALLOW_LIST = 0;
+        DENY_LIST = 1;
+        CONTACTS = 2;
+    }
+    optional StatusDistributionMode mode = 1;
+    repeated string userJid = 2;
 }
 
 message StarAction {
@@ -2156,6 +2233,7 @@ message ClientPayload {
         WHATSAPP = 0;
         MESSENGER = 1;
         INTEROP = 2;
+        INTEROP_MSGR = 3;
     }
     message InteropData {
         optional uint64 accountId = 1;
@@ -2442,6 +2520,16 @@ message WebMessageInfo {
         SUBGROUP_ADMIN_TRIGGERED_AUTO_ADD_RICH = 185;
         GROUP_CHANGE_RECENT_HISTORY_SHARING = 186;
         PAID_MESSAGE_SERVER_CAMPAIGN_ID = 187;
+        GENERAL_CHAT_CREATE = 188;
+        GENERAL_CHAT_ADD = 189;
+        GENERAL_CHAT_AUTO_ADD_DISABLED = 190;
+        SUGGESTED_SUBGROUP_ANNOUNCE = 191;
+        BIZ_BOT_1P_MESSAGING_ENABLED = 192;
+        CHANGE_USERNAME = 193;
+        BIZ_COEX_PRIVACY_INIT_SELF = 194;
+        BIZ_COEX_PRIVACY_TRANSITION_SELF = 195;
+        SUPPORT_AI_EDUCATION = 196;
+        BIZ_BOT_3P_MESSAGING_ENABLED = 197;
     }
     enum Status {
         ERROR = 0;
@@ -2501,6 +2589,11 @@ message WebMessageInfo {
     optional string originalSelfAuthorUserJidString = 51;
     optional uint64 revokeMessageTimestamp = 52;
     optional PinInChat pinInChat = 54;
+    optional PremiumMessageInfo premiumMessageInfo = 55;
+    optional bool is1PBizBotMessage = 56;
+    optional bool isGroupHistoryMessage = 57;
+    optional string botMessageInvokerJid = 58;
+    optional CommentMetadata commentMetadata = 59;
 }
 
 message WebFeatures {
@@ -2577,6 +2670,10 @@ message Reaction {
     optional string groupingKey = 3;
     optional int64 senderTimestampMs = 4;
     optional bool unread = 5;
+}
+
+message PremiumMessageInfo {
+    optional string serverCampaignId = 1;
 }
 
 message PollUpdate {
@@ -2702,6 +2799,11 @@ message KeepInChat {
     optional int64 serverTimestampMs = 6;
 }
 
+message CommentMetadata {
+    optional MessageKey commentParentKey = 1;
+    optional uint32 replyCount = 2;
+}
+
 message NoiseCertificate {
     message Details {
         optional uint32 serial = 1;
@@ -2731,5 +2833,40 @@ message CertChain {
     
     optional NoiseCertificate leaf = 1;
     optional NoiseCertificate intermediate = 2;
+}
+
+message QP {
+    message Filter {
+        required string filterName = 1;
+        repeated FilterParameters parameters = 2;
+        optional FilterResult filterResult = 3;
+        required FilterClientNotSupportedConfig clientNotSupportedConfig = 4;
+    }
+    
+    enum FilterResult {
+        TRUE = 1;
+        FALSE = 2;
+        UNKNOWN = 3;
+    }
+    message FilterParameters {
+        optional string key = 1;
+        optional string value = 2;
+    }
+    
+    enum FilterClientNotSupportedConfig {
+        PASS_BY_DEFAULT = 1;
+        FAIL_BY_DEFAULT = 2;
+    }
+    message FilterClause {
+        required ClauseType clauseType = 1;
+        repeated FilterClause clauses = 2;
+        repeated Filter filters = 3;
+    }
+    
+    enum ClauseType {
+        AND = 1;
+        OR = 2;
+        NOR = 3;
+    }
 }
 
