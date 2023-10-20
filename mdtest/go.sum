@@ -39,10 +39,12 @@ go.mau.fi/libsignal v0.1.1/go.mod h1:QLs89F/OA3ThdSL2Wz2p+o+fi8uuQUz0e1BRa6ExdBw
 go.mau.fi/util v0.1.1-0.20231013112707-e938021823cc h1:/ZY5g+McWqVSA6fK8ROBOyJFb5hCBBQKMcm2oRFzc9c=
 go.mau.fi/util v0.1.1-0.20231013112707-e938021823cc/go.mod h1:AxuJUMCxpzgJ5eV9JbPWKRH8aAJJidxetNdUj7qcb84=
 go.mau.fi/util v0.2.0/go.mod h1:AxuJUMCxpzgJ5eV9JbPWKRH8aAJJidxetNdUj7qcb84=
+go.mau.fi/util v0.2.0/go.mod h1:AxuJUMCxpzgJ5eV9JbPWKRH8aAJJidxetNdUj7qcb84=
 go.mau.fi/util v0.6.0 h1:W6SyB3Bm/GjenQ5iq8Z8WWdN85Gy2xS6L0wmnR7SVjg=
 go.mau.fi/util v0.6.0/go.mod h1:ljYdq3sPfpICc3zMU+/mHV/sa4z0nKxc67hSBwnrk8U=
 golang.org/x/crypto v0.13.0 h1:mvySKfSWJ+UKUii46M40LOvyWfN0s2U+46/jDd0e6Ck=
 golang.org/x/crypto v0.13.0/go.mod h1:y6Z2r+Rw4iayiXXAIxJIDAJ1zMW4yaTpebo8fPOliYc=
+golang.org/x/crypto v0.14.0/go.mod h1:MVFd36DqK4CsrnJYDkBA3VC4m2GkXAM0PvzMCn4JQf4=
 golang.org/x/crypto v0.14.0/go.mod h1:MVFd36DqK4CsrnJYDkBA3VC4m2GkXAM0PvzMCn4JQf4=
 golang.org/x/crypto v0.25.0 h1:ypSNr+bnYL2YhwoMt2zPxHFmbAN1KZs/njMG3hxUp30=
 golang.org/x/crypto v0.25.0/go.mod h1:T+wALwcMOSE0kXgUAnPAHqTLW+XHgcELELW8VaDgm/M=

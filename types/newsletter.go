@@ -14,6 +14,7 @@ import (
 
 	"go.mau.fi/util/jsontime"
 
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 )
 
