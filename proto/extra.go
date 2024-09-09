@@ -3,6 +3,10 @@ package armadillo
 import (
 	"google.golang.org/protobuf/proto"
 
+	"github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMultiDevice"
 	"go.mau.fi/whatsmeow/proto/instamadilloAddMessage"
 	"go.mau.fi/whatsmeow/proto/instamadilloDeleteMessage"
 	"go.mau.fi/whatsmeow/proto/instamadilloSupplementMessage"

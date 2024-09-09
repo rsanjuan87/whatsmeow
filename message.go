@@ -19,6 +19,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
+
 	"github.com/rs/zerolog"
 	"go.mau.fi/libsignal/groups"
 	"go.mau.fi/libsignal/protocol"

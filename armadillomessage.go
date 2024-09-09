@@ -20,6 +20,12 @@ import (
 	"go.mau.fi/whatsmeow/proto/waMsgTransport"
 	"go.mau.fi/whatsmeow/types"
 	"go.mau.fi/whatsmeow/types/events"
+	armadillo "github.com/rsanjuan87/whatsmeow/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 )
 
 func (cli *Client) handleDecryptedArmadillo(ctx context.Context, info *types.MessageInfo, decrypted []byte, retryCount int) (handled, handlerFailed bool) {

@@ -25,7 +25,7 @@ import (
 
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
-	"go.mau.fi/whatsmeow/proto/waMediaTransport"
+	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"go.mau.fi/whatsmeow/proto/waServerSync"
 	"go.mau.fi/whatsmeow/socket"
 	"go.mau.fi/whatsmeow/util/cbcutil"

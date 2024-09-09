@@ -28,6 +28,10 @@ import (
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waMsgApplication"
 	"go.mau.fi/whatsmeow/proto/waMsgTransport"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"
 )
