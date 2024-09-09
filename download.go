@@ -23,6 +23,8 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
+	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/proto/waHistorySync"
 	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"

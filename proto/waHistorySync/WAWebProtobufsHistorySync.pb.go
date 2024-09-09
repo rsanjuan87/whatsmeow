@@ -11,6 +11,10 @@ import (
 	sync "sync"
 	unsafe "unsafe"
 
+	waChatLockSettings "github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
+	waE2E "github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	waSyncAction "github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
+	waWeb "github.com/rsanjuan87/whatsmeow/proto/waWeb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 

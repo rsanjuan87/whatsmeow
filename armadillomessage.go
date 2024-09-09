@@ -12,6 +12,12 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
+	armadillo "github.com/rsanjuan87/whatsmeow/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 	armadillo "go.mau.fi/whatsmeow/proto"
 	"go.mau.fi/whatsmeow/proto/armadilloutil"
 	"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload"

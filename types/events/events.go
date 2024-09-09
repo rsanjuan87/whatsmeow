@@ -16,15 +16,15 @@ import (
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	armadillo "github.com/rsanjuan87/whatsmeow/proto"
-	"go.mau.fi/whatsmeow/proto/instamadilloTransportPayload"
+	"github.com/rsanjuan87/whatsmeow/proto/instamadilloTransportPayload"
 	"github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
 	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
-	"go.mau.fi/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/proto/waHistorySync"
 	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
 	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
 	"github.com/rsanjuan87/whatsmeow/types"
-	"go.mau.fi/whatsmeow/proto/waWeb"
+	"github.com/rsanjuan87/whatsmeow/proto/waWeb"
 	"github.com/rsanjuan87/whatsmeow/types"
 )
 

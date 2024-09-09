@@ -19,6 +19,8 @@ import (
 	"go.mau.fi/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 
 	"github.com/rsanjuan87/util/random"
 	"google.golang.org/protobuf/proto"

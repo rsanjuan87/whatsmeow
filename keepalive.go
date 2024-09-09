@@ -11,6 +11,7 @@ import (
 	"math/rand/v2"
 	"time"
 
+	//waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"

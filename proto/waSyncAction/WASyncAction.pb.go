@@ -11,6 +11,9 @@ import (
 	sync "sync"
 	unsafe "unsafe"
 
+	waChatLockSettings "github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
+	waCommon "github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	waDeviceCapabilities "github.com/rsanjuan87/whatsmeow/proto/waDeviceCapabilities"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
