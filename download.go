@@ -22,12 +22,8 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	waProto "go.mau.fi/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/proto/waMediaTransport"
-	"go.mau.fi/whatsmeow/socket"
-	"go.mau.fi/whatsmeow/util/cbcutil"
-	"go.mau.fi/whatsmeow/util/hkdfutil"
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"github.com/rsanjuan87/whatsmeow/socket"
 	"github.com/rsanjuan87/whatsmeow/util/cbcutil"
 	"github.com/rsanjuan87/whatsmeow/util/hkdfutil"

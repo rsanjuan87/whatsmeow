@@ -10,10 +10,10 @@ import (
 	reflect "reflect"
 	sync "sync"
 
-	waChatLockSettings "go.mau.fi/whatsmeow/proto/waChatLockSettings"
-	waE2E "go.mau.fi/whatsmeow/proto/waE2E"
-	waSyncAction "go.mau.fi/whatsmeow/proto/waSyncAction"
-	waWeb "go.mau.fi/whatsmeow/proto/waWeb"
+	waChatLockSettings "github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
+	waE2E "github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	waSyncAction "github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
+	waWeb "github.com/rsanjuan87/whatsmeow/proto/waWeb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
