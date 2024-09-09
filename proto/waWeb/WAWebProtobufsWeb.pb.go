@@ -10,6 +10,8 @@ import (
 	reflect "reflect"
 	sync "sync"
 
+	waCommon "github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	waE2E "github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 

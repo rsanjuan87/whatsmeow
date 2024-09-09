@@ -16,7 +16,7 @@ import (
 	"runtime/debug"
 	"time"
 
-	"go.mau.fi/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 
 	"go.mau.fi/libsignal/groups"
 	"go.mau.fi/libsignal/protocol"

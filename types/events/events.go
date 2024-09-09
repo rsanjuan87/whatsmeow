@@ -14,11 +14,11 @@ import (
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
-	armadillo "go.mau.fi/whatsmeow/proto"
-	"go.mau.fi/whatsmeow/proto/waArmadilloApplication"
-	"go.mau.fi/whatsmeow/proto/waConsumerApplication"
-	"go.mau.fi/whatsmeow/proto/waMsgApplication"
-	"go.mau.fi/whatsmeow/proto/waMsgTransport"
+	armadillo "github.com/rsanjuan87/whatsmeow/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
 	"github.com/rsanjuan87/whatsmeow/types"
 )
 

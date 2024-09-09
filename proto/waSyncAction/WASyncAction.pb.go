@@ -13,9 +13,9 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
-	waChatLockSettings "go.mau.fi/whatsmeow/proto/waChatLockSettings"
-	waCommon "go.mau.fi/whatsmeow/proto/waCommon"
-	waDeviceCapabilities "go.mau.fi/whatsmeow/proto/waDeviceCapabilities"
+	waChatLockSettings "github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
+	waCommon "github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	waDeviceCapabilities "github.com/rsanjuan87/whatsmeow/proto/waDeviceCapabilities"
 
 	_ "embed"
 )

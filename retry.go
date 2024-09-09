@@ -22,10 +22,10 @@ import (
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
-	"go.mau.fi/whatsmeow/proto/waCommon"
-	"go.mau.fi/whatsmeow/proto/waConsumerApplication"
-	"go.mau.fi/whatsmeow/proto/waMsgApplication"
-	"go.mau.fi/whatsmeow/proto/waMsgTransport"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
+	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"
 )
