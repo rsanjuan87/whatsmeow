@@ -11,6 +11,8 @@ import (
 	"math/rand"
 	"time"
 
+	"go.mau.fi/whatsmeow/types"
+	"go.mau.fi/whatsmeow/types/events"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"
@@ -67,7 +69,6 @@ func (cli *Client) sendKeepAlive(ctx context.Context) (isSuccess, shouldContinue
 		Namespace: "w:p",
 		Type:      "get",
 		To:        types.ServerJID,
-		Content:   []waBinary.Node{{Tag: "ping"}},
 	})
 	if err != nil {
 		cli.Log.Warnf("Failed to send keepalive: %v", err)

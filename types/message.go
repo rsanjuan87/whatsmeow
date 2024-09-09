@@ -36,6 +36,38 @@ type DeviceSentMeta struct {
 	Phash          string
 }
 
+type EditAttribute string
+
+const (
+	EditAttributeEmpty        EditAttribute = ""
+	EditAttributeMessageEdit  EditAttribute = "1"
+	EditAttributePinInChat    EditAttribute = "2"
+	EditAttributeAdminEdit    EditAttribute = "3" // only used in newsletters
+	EditAttributeSenderRevoke EditAttribute = "7"
+	EditAttributeAdminRevoke  EditAttribute = "8"
+)
+
+type BotEditType string
+
+const (
+	EditTypeFirst BotEditType = "first"
+	EditTypeInner BotEditType = "inner"
+	EditTypeLast  BotEditType = "last"
+)
+
+// MsgBotInfo targets <bot>
+type MsgBotInfo struct {
+	EditType              BotEditType
+	EditTargetID          MessageID
+	EditSenderTimestampMS time.Time
+}
+
+// MsgMetaInfo targets <meta>
+type MsgMetaInfo struct {
+	TargetID     MessageID
+	TargetSender JID
+}
+
 // MessageInfo contains metadata about an incoming message.
 type MessageInfo struct {
 	MessageSource
@@ -47,6 +79,10 @@ type MessageInfo struct {
 	Category  string
 	Multicast bool
 	MediaType string
+	Edit      EditAttribute
+
+	MsgBotInfo  MsgBotInfo
+	MsgMetaInfo MsgMetaInfo
 
 	VerifiedName   *VerifiedName
 	DeviceSentMeta *DeviceSentMeta // Metadata for direct messages sent from another one of the user's own devices.

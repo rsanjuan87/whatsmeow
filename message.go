@@ -14,8 +14,9 @@ import (
 	"fmt"
 	"io"
 	"runtime/debug"
-	"sync/atomic"
 	"time"
+
+	"go.mau.fi/whatsmeow/proto/waE2E"
 
 	"go.mau.fi/libsignal/groups"
 	"go.mau.fi/libsignal/protocol"
@@ -89,9 +90,45 @@ func (cli *Client) parseMessageSource(node *waBinary.Node, requireParticipant bo
 		} else {
 			source.Chat = from.ToNonAD()
 		}
+	} else if from.IsBot() {
+		source.Sender = from
+		meta := node.GetChildByTag("meta")
+		ag = meta.AttrGetter()
+		targetChatJID := ag.OptionalJID("target_chat_jid")
+		if targetChatJID != nil {
+			source.Chat = targetChatJID.ToNonAD()
+		} else {
+			source.Chat = from
+		}
 	} else {
 		source.Chat = from.ToNonAD()
 		source.Sender = from
+	}
+	err = ag.Error()
+	return
+}
+
+func (cli *Client) parseMsgBotInfo(node waBinary.Node) (botInfo types.MsgBotInfo, err error) {
+	botNode := node.GetChildByTag("bot")
+
+	ag := botNode.AttrGetter()
+	botInfo.EditType = types.BotEditType(ag.String("edit"))
+	if botInfo.EditType == types.EditTypeInner || botInfo.EditType == types.EditTypeLast {
+		botInfo.EditTargetID = types.MessageID(ag.String("edit_target_id"))
+		botInfo.EditSenderTimestampMS = ag.UnixMilli("sender_timestamp_ms")
+	}
+	err = ag.Error()
+	return
+}
+
+func (cli *Client) parseMsgMetaInfo(node waBinary.Node) (metaInfo types.MsgMetaInfo, err error) {
+	metaNode := node.GetChildByTag("meta")
+
+	ag := metaNode.AttrGetter()
+	metaInfo.TargetID = types.MessageID(ag.String("target_id"))
+	targetSenderJID := ag.OptionalJIDOrEmpty("target_sender_jid")
+	if targetSenderJID.User != "" {
+		metaInfo.TargetSender = targetSenderJID
 	}
 	err = ag.Error()
 	return
@@ -111,20 +148,36 @@ func (cli *Client) parseMessageInfo(node *waBinary.Node) (*types.MessageInfo, er
 	info.PushName = ag.OptionalString("notify")
 	info.Category = ag.OptionalString("category")
 	info.Type = ag.OptionalString("type")
+	info.Edit = types.EditAttribute(ag.OptionalString("edit"))
 	if !ag.OK() {
 		return nil, ag.Error()
 	}
 
 	for _, child := range node.GetChildren() {
-		if child.Tag == "multicast" {
+		switch child.Tag {
+		case "multicast":
 			info.Multicast = true
-		} else if child.Tag == "verified_name" {
+		case "verified_name":
 			info.VerifiedName, err = parseVerifiedNameContent(child)
 			if err != nil {
 				cli.Log.Warnf("Failed to parse verified_name node in %s: %v", info.ID, err)
 			}
-		} else if mediaType, ok := child.AttrGetter().GetString("mediatype", false); ok {
-			info.MediaType = mediaType
+		case "bot":
+			info.MsgBotInfo, err = cli.parseMsgBotInfo(child)
+			if err != nil {
+				cli.Log.Warnf("Failed to parse <bot> node in %s: %v", info.ID, err)
+			}
+		case "meta":
+			// TODO parse non-bot metadata too
+			info.MsgMetaInfo, _ = cli.parseMsgMetaInfo(child)
+		case "franking":
+			// TODO
+		case "trace":
+			// TODO
+		default:
+			if mediaType, ok := child.AttrGetter().GetString("mediatype", false); ok {
+				info.MediaType = mediaType
+			}
 		}
 	}
 
@@ -149,22 +202,32 @@ func (cli *Client) handlePlaintextMessage(info *types.MessageInfo, node *waBinar
 		cli.Log.Warnf("Error unmarshaling plaintext message from %s: %v", info.SourceString(), err)
 		return
 	}
-	cli.handleDecryptedMessage(info, &msg, 0)
-	// TODO do these need receipts?
-	//go cli.sendMessageReceipt(info)
+	cli.storeMessageSecret(info, &msg)
+	evt := &events.Message{
+		Info:       *info,
+		RawMessage: &msg,
+	}
+	meta, ok := node.GetOptionalChildByTag("meta")
+	if ok {
+		evt.NewsletterMeta = &events.NewsletterMessageMeta{
+			EditTS:     meta.AttrGetter().UnixMilli("msg_edit_t"),
+			OriginalTS: meta.AttrGetter().UnixTime("original_msg_t"),
+		}
+	}
+	cli.dispatchEvent(evt.UnwrapRaw())
 	return
 }
 
 func (cli *Client) decryptMessages(info *types.MessageInfo, node *waBinary.Node) {
 	if len(node.GetChildrenByTag("unavailable")) > 0 && len(node.GetChildrenByTag("enc")) == 0 {
 		cli.Log.Warnf("Unavailable message %s from %s", info.ID, info.SourceString())
-		go cli.sendRetryReceipt(node, info, true)
+		go cli.delayedRequestMessageFromPhone(info)
 		cli.dispatchEvent(&events.UndecryptableMessage{Info: *info, IsUnavailable: true})
 		return
 	}
 
 	children := node.GetChildren()
-	cli.Log.Debugf("Decrypting %d messages from %s", len(children), info.SourceString())
+	cli.Log.Debugf("Decrypting message from %s", info.SourceString())
 	handled := false
 	containsDirectMsg := false
 	for _, child := range children {
@@ -183,36 +246,76 @@ func (cli *Client) decryptMessages(info *types.MessageInfo, node *waBinary.Node)
 			containsDirectMsg = true
 		} else if info.IsGroup && encType == "skmsg" {
 			decrypted, err = cli.decryptGroupMsg(&child, info.Sender, info.Chat)
+		} else if encType == "msmsg" && info.Sender.IsBot() {
+			// Meta AI / other bots (biz?):
+
+			// step 1: get message secret
+			targetSenderJID := info.MsgMetaInfo.TargetSender
+			if targetSenderJID.User == "" {
+				// if no targetSenderJID in <meta> this must be ourselves (one-one-one mode)
+				targetSenderJID = cli.getOwnID()
+			}
+
+			messageSecret, err := cli.Store.MsgSecrets.GetMessageSecret(info.Chat, targetSenderJID, info.MsgMetaInfo.TargetID)
+			if err != nil || messageSecret == nil {
+				cli.Log.Warnf("Error getting message secret for bot msg with id %s", node.AttrGetter().String("id"))
+				continue
+			}
+
+			// step 2: get MessageSecretMessage
+			byteContents := child.Content.([]byte) // <enc> contents
+			var msMsg waE2E.MessageSecretMessage
+
+			err = proto.Unmarshal(byteContents, &msMsg)
+			if err != nil {
+				cli.Log.Warnf("Error decoding MessageSecretMesage protobuf %v", err)
+				continue
+			}
+
+			// step 3: determine best message id for decryption
+			var messageID string
+			if info.MsgBotInfo.EditType == types.EditTypeInner || info.MsgBotInfo.EditType == types.EditTypeLast {
+				messageID = info.MsgBotInfo.EditTargetID
+			} else {
+				messageID = info.ID
+			}
+
+			// step 4: decrypt and voila
+			decrypted, err = cli.decryptBotMessage(messageSecret, &msMsg, messageID, targetSenderJID, info)
 		} else {
 			cli.Log.Warnf("Unhandled encrypted message (type %s) from %s", encType, info.SourceString())
 			continue
 		}
+
 		if err != nil {
 			cli.Log.Warnf("Error decrypting message from %s: %v", info.SourceString(), err)
 			isUnavailable := encType == "skmsg" && !containsDirectMsg && errors.Is(err, signalerror.ErrNoSenderKeyForUser)
 			go cli.sendRetryReceipt(node, info, isUnavailable)
-			decryptFailMode, _ := child.Attrs["decrypt-fail"].(string)
 			cli.dispatchEvent(&events.UndecryptableMessage{
 				Info:            *info,
 				IsUnavailable:   isUnavailable,
-				DecryptFailMode: events.DecryptFailMode(decryptFailMode),
+				DecryptFailMode: events.DecryptFailMode(ag.OptionalString("decrypt-fail")),
 			})
 			return
 		}
-
-		var msg waProto.Message
-		err = proto.Unmarshal(decrypted, &msg)
-		if err != nil {
-			cli.Log.Warnf("Error unmarshaling decrypted message from %s: %v", info.SourceString(), err)
-			continue
-		}
 		retryCount := ag.OptionalInt("count")
-		if retryCount > 0 {
-			cli.cancelDelayedRequestFromPhone(info.ID)
-		}
+		cli.cancelDelayedRequestFromPhone(info.ID)
 
-		cli.handleDecryptedMessage(info, &msg, retryCount)
-		handled = true
+		var msg waE2E.Message
+		switch ag.Int("v") {
+		case 2:
+			err = proto.Unmarshal(decrypted, &msg)
+			if err != nil {
+				cli.Log.Warnf("Error unmarshaling decrypted message from %s: %v", info.SourceString(), err)
+				continue
+			}
+			cli.handleDecryptedMessage(info, &msg, retryCount)
+			handled = true
+		case 3:
+			handled = cli.handleDecryptedArmadillo(info, decrypted, retryCount)
+		default:
+			cli.Log.Warnf("Unknown version %d in decrypted message from %s", ag.Int("v"), info.SourceString())
+		}
 	}
 	if handled {
 		go cli.sendMessageReceipt(info)
@@ -261,6 +364,9 @@ func (cli *Client) decryptDM(child *waBinary.Node, from types.JID, isPreKey bool
 			return nil, fmt.Errorf("failed to decrypt normal message: %w", err)
 		}
 	}
+	if child.AttrGetter().Int("v") == 3 {
+		return plaintext, nil
+	}
 	return unpadMessage(plaintext)
 }
 
@@ -277,6 +383,9 @@ func (cli *Client) decryptGroupMsg(child *waBinary.Node, from types.JID, chat ty
 	plaintext, err := cipher.Decrypt(msg)
 	if err != nil {
 		return nil, fmt.Errorf("failed to decrypt group message: %w", err)
+	}
+	if child.AttrGetter().Int("v") == 3 {
+		return plaintext, nil
 	}
 	return unpadMessage(plaintext)
 }
@@ -305,14 +414,14 @@ func padMessage(plaintext []byte) []byte {
 	if pad[0] == 0 {
 		pad[0] = 0xf
 	}
-	plaintext = append(plaintext, bytes.Repeat(pad[:], int(pad[0]))...)
+	plaintext = append(plaintext, bytes.Repeat(pad, int(pad[0]))...)
 	return plaintext
 }
 
-func (cli *Client) handleSenderKeyDistributionMessage(chat, from types.JID, rawSKDMsg *waProto.SenderKeyDistributionMessage) {
+func (cli *Client) handleSenderKeyDistributionMessage(chat, from types.JID, axolotlSKDM []byte) {
 	builder := groups.NewGroupSessionBuilder(cli.Store, pbSerializer)
 	senderKeyName := protocol.NewSenderKeyName(chat.String(), from.SignalAddress())
-	sdkMsg, err := protocol.NewSenderKeyDistributionMessageFromBytes(rawSKDMsg.AxolotlSenderKeyDistributionMessage, pbSerializer.SenderKeyDistributionMessage)
+	sdkMsg, err := protocol.NewSenderKeyDistributionMessageFromBytes(axolotlSKDM, pbSerializer.SenderKeyDistributionMessage)
 	if err != nil {
 		cli.Log.Errorf("Failed to parse sender key distribution message from %s for %s: %v", from, chat, err)
 		return
@@ -323,7 +432,7 @@ func (cli *Client) handleSenderKeyDistributionMessage(chat, from types.JID, rawS
 
 func (cli *Client) handleHistorySyncNotificationLoop() {
 	defer func() {
-		atomic.StoreUint32(&cli.historySyncHandlerStarted, 0)
+		cli.historySyncHandlerStarted.Store(false)
 		err := recover()
 		if err != nil {
 			cli.Log.Errorf("History sync handler panicked: %v\n%s", err, debug.Stack())
@@ -331,7 +440,7 @@ func (cli *Client) handleHistorySyncNotificationLoop() {
 
 		// Check in case something new appeared in the channel between the loop stopping
 		// and the atomic variable being updated. If yes, restart the loop.
-		if len(cli.historySyncNotifications) > 0 && atomic.CompareAndSwapUint32(&cli.historySyncHandlerStarted, 0, 1) {
+		if len(cli.historySyncNotifications) > 0 && cli.historySyncHandlerStarted.CompareAndSwap(false, true) {
 			cli.Log.Warnf("New history sync notifications appeared after loop stopped, restarting loop...")
 			go cli.handleHistorySyncNotificationLoop()
 		}
@@ -424,10 +533,10 @@ func (cli *Client) handleProtocolMessage(info *types.MessageInfo, msg *waProto.M
 
 	if protoMsg.GetHistorySyncNotification() != nil && info.IsFromMe {
 		cli.historySyncNotifications <- protoMsg.HistorySyncNotification
-		if atomic.CompareAndSwapUint32(&cli.historySyncHandlerStarted, 0, 1) {
+		if cli.historySyncHandlerStarted.CompareAndSwap(false, true) {
 			go cli.handleHistorySyncNotificationLoop()
 		}
-		go cli.sendProtocolMessageReceipt(info.ID, "hist_sync")
+		go cli.sendProtocolMessageReceipt(info.ID, types.ReceiptTypeHistorySync)
 	}
 
 	if protoMsg.GetPeerDataOperationRequestResponseMessage().GetPeerDataOperationRequestType() == waProto.PeerDataOperationRequestType_PLACEHOLDER_MESSAGE_RESEND {
@@ -439,7 +548,7 @@ func (cli *Client) handleProtocolMessage(info *types.MessageInfo, msg *waProto.M
 	}
 
 	if info.Category == "peer" {
-		go cli.sendProtocolMessageReceipt(info.ID, "peer_msg")
+		go cli.sendProtocolMessageReceipt(info.ID, types.ReceiptTypePeerMsg)
 	}
 }
 
@@ -450,9 +559,9 @@ func (cli *Client) processProtocolParts(info *types.MessageInfo, msg *waProto.Me
 	}
 	if msg.GetSenderKeyDistributionMessage() != nil {
 		if !info.IsGroup {
-			cli.Log.Warnf("Got sender key distribution message in non-group chat from", info.Sender)
+			cli.Log.Warnf("Got sender key distribution message in non-group chat from %s", info.Sender)
 		} else {
-			cli.handleSenderKeyDistributionMessage(info.Chat, info.Sender, msg.SenderKeyDistributionMessage)
+			cli.handleSenderKeyDistributionMessage(info.Chat, info.Sender, msg.SenderKeyDistributionMessage.AxolotlSenderKeyDistributionMessage)
 		}
 	}
 	// N.B. Edits are protocol messages, but they're also wrapped inside EditedMessage,
@@ -460,6 +569,10 @@ func (cli *Client) processProtocolParts(info *types.MessageInfo, msg *waProto.Me
 	if msg.GetProtocolMessage() != nil {
 		cli.handleProtocolMessage(info, msg)
 	}
+	cli.storeMessageSecret(info, msg)
+}
+
+func (cli *Client) storeMessageSecret(info *types.MessageInfo, msg *waProto.Message) {
 	if msgSecret := msg.GetMessageContextInfo().GetMessageSecret(); len(msgSecret) > 0 {
 		err := cli.Store.MsgSecrets.PutMessageSecret(info.Chat, info.Sender, info.ID, msgSecret)
 		if err != nil {
@@ -544,7 +657,7 @@ func (cli *Client) handleDecryptedMessage(info *types.MessageInfo, msg *waProto.
 	cli.dispatchEvent(evt.UnwrapRaw())
 }
 
-func (cli *Client) sendProtocolMessageReceipt(id, msgType string) {
+func (cli *Client) sendProtocolMessageReceipt(id types.MessageID, msgType types.ReceiptType) {
 	clientID := cli.Store.ID
 	if len(id) == 0 || clientID == nil {
 		return
@@ -552,8 +665,8 @@ func (cli *Client) sendProtocolMessageReceipt(id, msgType string) {
 	err := cli.sendNode(waBinary.Node{
 		Tag: "receipt",
 		Attrs: waBinary.Attrs{
-			"id":   id,
-			"type": msgType,
+			"id":   string(id),
+			"type": string(msgType),
 			"to":   types.NewJID(clientID.User, types.LegacyUserServer),
 		},
 		Content: nil,
