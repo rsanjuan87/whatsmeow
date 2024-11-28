@@ -21,7 +21,7 @@ import (
 
 	"github.com/rsanjuan87/whatsmeow/appstate"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
-	"go.mau.fi/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/store"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"
