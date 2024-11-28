@@ -9,14 +9,15 @@ package whatsmeow
 import (
 	"encoding/json"
 	"errors"
-	"google.golang.org/protobuf/proto"
 
 	"github.com/rsanjuan87/whatsmeow/appstate"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
 	"github.com/rsanjuan87/whatsmeow/store"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"
+	"google.golang.org/protobuf/proto"
+
+	waProto "go.mau.fi/whatsmeow/binary/proto"
 )
 
 func (cli *Client) handleEncryptNotification(node *waBinary.Node) {
