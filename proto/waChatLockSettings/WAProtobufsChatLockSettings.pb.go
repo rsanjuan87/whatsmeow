@@ -14,8 +14,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
-	waUserPassword "github.com/rsanjuan87/whatsmeow/proto/waUserPassword"
-
 	_ "embed"
 )
 
