@@ -15,6 +15,7 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
+	_ "embed"
 	waCommon "github.com/rsanjuan87/whatsmeow/proto/waCommon"
 )
 
