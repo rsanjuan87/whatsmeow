@@ -15,7 +15,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 
 	waChatLockSettings "github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
-	waCommon "go.mau.fi/whatsmeow/proto/waCommon"
+	waCommon "github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	waE2E "github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	waSyncAction "github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
 	waWeb "github.com/rsanjuan87/whatsmeow/proto/waWeb"
@@ -2283,7 +2283,7 @@ const file_waHistorySync_WAWebProtobufsHistorySync_proto_rawDesc = "" +
 	"\bE2EE_MSG\x10\x01\x12\x0e\n" +
 	"\n" +
 	"NE2EE_SELF\x10\x02\x12\x0f\n" +
-	"\vNE2EE_OTHER\x10\x03B)Z'go.mau.fi/whatsmeow/proto/waHistorySync"
+	"\vNE2EE_OTHER\x10\x03B)Z'github.com/rsanjuan87/whatsmeow/proto/waHistorySync"
 
 var (
 	file_waHistorySync_WAWebProtobufsHistorySync_proto_rawDescOnce sync.Once

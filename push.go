@@ -10,7 +10,7 @@ import (
 	"context"
 	"encoding/base64"
 
-	"go.mau.fi/util/random"
+	"github.com/rsanjuan87/util/random"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/types"

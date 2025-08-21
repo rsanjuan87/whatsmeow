@@ -14,10 +14,10 @@ import (
 	"fmt"
 	"time"
 
-	"go.mau.fi/libsignal/ecc"
-	"go.mau.fi/libsignal/groups"
-	"go.mau.fi/libsignal/keys/prekey"
-	"go.mau.fi/libsignal/protocol"
+	"github.com/rsanjuan87/libsignal/ecc"
+	"github.com/rsanjuan87/libsignal/groups"
+	"github.com/rsanjuan87/libsignal/keys/prekey"
+	"github.com/rsanjuan87/libsignal/protocol"
 	"google.golang.org/protobuf/proto"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"

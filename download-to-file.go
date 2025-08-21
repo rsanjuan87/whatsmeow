@@ -18,8 +18,8 @@ import (
 	"strings"
 	"time"
 
-	"go.mau.fi/util/fallocate"
-	"go.mau.fi/util/retryafter"
+	"github.com/rsanjuan87/util/fallocate"
+	"github.com/rsanjuan87/util/retryafter"
 
 	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"github.com/rsanjuan87/whatsmeow/util/cbcutil"

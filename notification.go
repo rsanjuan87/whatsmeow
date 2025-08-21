@@ -19,12 +19,12 @@ import (
 	"github.com/rsanjuan87/whatsmeow/types/events"
 	"google.golang.org/protobuf/proto"
 
-	"go.mau.fi/whatsmeow/appstate"
-	waBinary "go.mau.fi/whatsmeow/binary"
-	"go.mau.fi/whatsmeow/proto/waE2E"
-	"go.mau.fi/whatsmeow/store"
-	"go.mau.fi/whatsmeow/types"
-	"go.mau.fi/whatsmeow/types/events"
+	"github.com/rsanjuan87/whatsmeow/appstate"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/types"
+	"github.com/rsanjuan87/whatsmeow/types/events"
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 )
 

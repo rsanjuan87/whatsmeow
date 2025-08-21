@@ -14,11 +14,11 @@ import (
 	mathRand "math/rand/v2"
 
 	"github.com/google/uuid"
-	"go.mau.fi/util/dbutil"
-	"go.mau.fi/util/random"
+	"github.com/rsanjuan87/util/dbutil"
+	"github.com/rsanjuan87/util/random"
 
 	"github.com/rsanjuan87/whatsmeow/proto/waAdv"
-	"go.mau.fi/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/store"
 	"github.com/rsanjuan87/whatsmeow/store/sqlstore/upgrades"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/util/keys"

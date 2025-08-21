@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"time"
 
-	"go.mau.fi/libsignal/ecc"
-	"go.mau.fi/libsignal/keys/identity"
-	"go.mau.fi/libsignal/keys/prekey"
-	"go.mau.fi/libsignal/util/optional"
+	"github.com/rsanjuan87/libsignal/ecc"
+	"github.com/rsanjuan87/libsignal/keys/identity"
+	"github.com/rsanjuan87/libsignal/keys/prekey"
+	"github.com/rsanjuan87/libsignal/util/optional"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/types"

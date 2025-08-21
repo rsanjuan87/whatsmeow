@@ -15,12 +15,12 @@ import (
 	"sort"
 	"sync"
 
-	"go.mau.fi/util/exerrors"
-	"go.mau.fi/util/exstrings"
+	"github.com/rsanjuan87/util/exerrors"
+	"github.com/rsanjuan87/util/exstrings"
 
-	waBinary "go.mau.fi/whatsmeow/binary"
-	"go.mau.fi/whatsmeow/proto/waE2E"
-	"go.mau.fi/whatsmeow/types"
+	waBinary "github.com/rsanjuan87/whatsmeow/binary"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/types"
 )
 
 //go:embed reportingfields.json

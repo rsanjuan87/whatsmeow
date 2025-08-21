@@ -2786,7 +2786,7 @@ const file_waArmadilloApplication_WAArmadilloApplication_proto_rawDesc = "" +
 	"\vMEDIUM_LIKE\x10\x02\x12\x0e\n" +
 	"\n" +
 	"LARGE_LIKE\x10\x03B\t\n" +
-	"\acontentB2Z0go.mau.fi/whatsmeow/proto/waArmadilloApplication"
+	"\acontentB2Z0github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
 
 var (
 	file_waArmadilloApplication_WAArmadilloApplication_proto_rawDescOnce sync.Once

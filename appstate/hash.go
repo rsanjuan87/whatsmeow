@@ -16,7 +16,7 @@ import (
 
 	"github.com/rsanjuan87/whatsmeow/appstate/lthash"
 	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
-	"go.mau.fi/whatsmeow/proto/waSyncAction"
+	"github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
 )
 
 type Mutation struct {

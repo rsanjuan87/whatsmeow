@@ -17,11 +17,11 @@ import (
 	"github.com/rsanjuan87/whatsmeow/proto/instamadilloTransportPayload"
 	"github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
 	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
-	"go.mau.fi/whatsmeow/proto/waE2E"
-	"go.mau.fi/whatsmeow/proto/waHistorySync"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waHistorySync"
 	"github.com/rsanjuan87/whatsmeow/proto/waMsgApplication"
 	"github.com/rsanjuan87/whatsmeow/proto/waMsgTransport"
-	"go.mau.fi/whatsmeow/proto/waWeb"
+	"github.com/rsanjuan87/whatsmeow/proto/waWeb"
 	"github.com/rsanjuan87/whatsmeow/types"
 )
 

@@ -15,12 +15,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"go.mau.fi/libsignal/groups"
-	"go.mau.fi/libsignal/keys/prekey"
-	"go.mau.fi/libsignal/protocol"
-	"go.mau.fi/libsignal/session"
-	"go.mau.fi/libsignal/signalerror"
-	"go.mau.fi/util/random"
+	"github.com/rsanjuan87/libsignal/groups"
+	"github.com/rsanjuan87/libsignal/keys/prekey"
+	"github.com/rsanjuan87/libsignal/protocol"
+	"github.com/rsanjuan87/libsignal/session"
+	"github.com/rsanjuan87/libsignal/signalerror"
+	"github.com/rsanjuan87/util/random"
 	"google.golang.org/protobuf/proto"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"

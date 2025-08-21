@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog"
-	"go.mau.fi/util/ptr"
+	"github.com/rsanjuan87/util/ptr"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/types"

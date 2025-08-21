@@ -19,14 +19,14 @@ import (
 	"strings"
 	"time"
 
-	"go.mau.fi/util/retryafter"
+	"github.com/rsanjuan87/util/retryafter"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
 
-	"go.mau.fi/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/proto/waHistorySync"
 	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
-	"go.mau.fi/whatsmeow/proto/waServerSync"
+	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
 	"github.com/rsanjuan87/whatsmeow/socket"
 	"github.com/rsanjuan87/whatsmeow/util/cbcutil"
 	"github.com/rsanjuan87/whatsmeow/util/hkdfutil"

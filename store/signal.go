@@ -10,13 +10,13 @@ import (
 	"context"
 	"fmt"
 
-	"go.mau.fi/libsignal/ecc"
-	groupRecord "go.mau.fi/libsignal/groups/state/record"
-	"go.mau.fi/libsignal/keys/identity"
-	"go.mau.fi/libsignal/protocol"
-	"go.mau.fi/libsignal/serialize"
-	"go.mau.fi/libsignal/state/record"
-	"go.mau.fi/libsignal/state/store"
+	"github.com/rsanjuan87/libsignal/ecc"
+	groupRecord "github.com/rsanjuan87/libsignal/groups/state/record"
+	"github.com/rsanjuan87/libsignal/keys/identity"
+	"github.com/rsanjuan87/libsignal/protocol"
+	"github.com/rsanjuan87/libsignal/serialize"
+	"github.com/rsanjuan87/libsignal/state/record"
+	"github.com/rsanjuan87/libsignal/state/store"
 
 	"github.com/rsanjuan87/whatsmeow/util/keys"
 )

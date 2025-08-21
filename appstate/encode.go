@@ -9,9 +9,9 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"go.mau.fi/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
-	"go.mau.fi/whatsmeow/proto/waSyncAction"
+	"github.com/rsanjuan87/whatsmeow/proto/waSyncAction"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/util/cbcutil"
 )

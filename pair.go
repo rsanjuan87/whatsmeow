@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"strings"
 
-	"go.mau.fi/libsignal/ecc"
+	"github.com/rsanjuan87/libsignal/ecc"
 	"google.golang.org/protobuf/proto"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"

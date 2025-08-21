@@ -11,11 +11,11 @@ import (
 	"fmt"
 	"time"
 
-	"go.mau.fi/libsignal/ecc"
+	"github.com/rsanjuan87/libsignal/ecc"
 	"google.golang.org/protobuf/proto"
 
 	"github.com/rsanjuan87/whatsmeow/proto/waCert"
-	"go.mau.fi/whatsmeow/proto/waWa6"
+	"github.com/rsanjuan87/whatsmeow/proto/waWa6"
 	"github.com/rsanjuan87/whatsmeow/socket"
 	"github.com/rsanjuan87/whatsmeow/util/keys"
 )
