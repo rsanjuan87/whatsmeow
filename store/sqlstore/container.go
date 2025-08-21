@@ -23,7 +23,7 @@ import (
 	"github.com/rsanjuan87/whatsmeow/util/keys"
 	waLog "github.com/rsanjuan87/whatsmeow/util/log"
 	"github.com/rsanjuan87/whatsmeow/proto/waAdv"
-	"go.mau.fi/whatsmeow/store"
+	"github.com/rsanjuan87/whatsmeow/store"
 	"github.com/rsanjuan87/whatsmeow/store/sqlstore/upgrades"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/util/keys"

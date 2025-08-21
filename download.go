@@ -26,7 +26,7 @@ import (
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
 	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
-	"go.mau.fi/whatsmeow/proto/waHistorySync"
+	"github.com/rsanjuan87/whatsmeow/proto/waHistorySync"
 	"github.com/rsanjuan87/whatsmeow/proto/waMediaTransport"
 	"github.com/rsanjuan87/whatsmeow/proto/waServerSync"
 	"github.com/rsanjuan87/whatsmeow/socket"

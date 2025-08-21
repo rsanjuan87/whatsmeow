@@ -35,7 +35,7 @@ import (
 	"github.com/rsanjuan87/whatsmeow/types/events"
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
 	"github.com/rsanjuan87/whatsmeow/proto/waBotMetadata"
-	"go.mau.fi/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/types"
 	"github.com/rsanjuan87/whatsmeow/types/events"

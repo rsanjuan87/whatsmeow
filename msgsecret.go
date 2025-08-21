@@ -15,14 +15,14 @@ import (
 	"go.mau.fi/util/random"
 	"google.golang.org/protobuf/proto"
 
-	"go.mau.fi/whatsmeow/proto/waCommon"
-	"go.mau.fi/whatsmeow/proto/waE2E"
+	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
+	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waE2E"
 
-	"github.com/rsanjuan87/util/random"
+	"go.mau.fi/util/random"
 	"google.golang.org/protobuf/proto"
 
 	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
