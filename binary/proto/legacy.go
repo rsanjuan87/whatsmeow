@@ -3,6 +3,25 @@
 package proto
 
 import (
+	"go.mau.fi/whatsmeow/proto/waAdv"
+	"go.mau.fi/whatsmeow/proto/waBotMetadata"
+	"go.mau.fi/whatsmeow/proto/waCert"
+	"go.mau.fi/whatsmeow/proto/waChatLockSettings"
+	"go.mau.fi/whatsmeow/proto/waCommon"
+	"go.mau.fi/whatsmeow/proto/waCompanionReg"
+	"go.mau.fi/whatsmeow/proto/waDeviceCapabilities"
+	"go.mau.fi/whatsmeow/proto/waE2E"
+	"go.mau.fi/whatsmeow/proto/waEphemeral"
+	"go.mau.fi/whatsmeow/proto/waHistorySync"
+	"go.mau.fi/whatsmeow/proto/waMmsRetry"
+	"go.mau.fi/whatsmeow/proto/waMsgTransport"
+	"go.mau.fi/whatsmeow/proto/waQuickPromotionSurfaces"
+	"go.mau.fi/whatsmeow/proto/waServerSync"
+	"go.mau.fi/whatsmeow/proto/waSyncAction"
+	"go.mau.fi/whatsmeow/proto/waUserPassword"
+	"go.mau.fi/whatsmeow/proto/waVnameCert"
+	"go.mau.fi/whatsmeow/proto/waWa6"
+	"go.mau.fi/whatsmeow/proto/waWeb"
 	"github.com/rsanjuan87/whatsmeow/proto/waAdv"
 	"github.com/rsanjuan87/whatsmeow/proto/waCert"
 	"github.com/rsanjuan87/whatsmeow/proto/waChatLockSettings"
@@ -54,8 +73,8 @@ type (
 	ContextInfo_ExternalAdReplyInfo_MediaType                                                                           = waE2E.ContextInfo_ExternalAdReplyInfo_MediaType
 	ContextInfo_AdReplyInfo_MediaType                                                                                   = waE2E.ContextInfo_AdReplyInfo_MediaType
 	ForwardedNewsletterMessageInfo_ContentType                                                                          = waE2E.ContextInfo_ForwardedNewsletterMessageInfo_ContentType
-	BotPluginMetadata_SearchProvider                                                                                    = waE2E.BotPluginMetadata_SearchProvider
-	BotPluginMetadata_PluginType                                                                                        = waE2E.BotPluginMetadata_PluginType
+	BotPluginMetadata_SearchProvider                                                                                    = waBotMetadata.BotPluginMetadata_SearchProvider
+	BotPluginMetadata_PluginType                                                                                        = waBotMetadata.BotPluginMetadata_PluginType
 	PaymentBackground_Type                                                                                              = waE2E.PaymentBackground_Type
 	VideoMessage_Attribution                                                                                            = waE2E.VideoMessage_Attribution
 	SecretEncryptedMessage_SecretEncType                                                                                = waE2E.SecretEncryptedMessage_SecretEncType
@@ -174,10 +193,10 @@ type (
 	DeviceListMetadata                                                                                                  = waMsgTransport.DeviceListMetadata
 	ContextInfo                                                                                                         = waE2E.ContextInfo
 	ForwardedNewsletterMessageInfo                                                                                      = waE2E.ContextInfo_ForwardedNewsletterMessageInfo
-	BotSuggestedPromptMetadata                                                                                          = waE2E.BotSuggestedPromptMetadata
-	BotPluginMetadata                                                                                                   = waE2E.BotPluginMetadata
-	BotMetadata                                                                                                         = waE2E.BotMetadata
-	BotAvatarMetadata                                                                                                   = waE2E.BotAvatarMetadata
+	BotSuggestedPromptMetadata                                                                                          = waBotMetadata.BotSuggestedPromptMetadata
+	BotPluginMetadata                                                                                                   = waBotMetadata.BotPluginMetadata
+	BotMetadata                                                                                                         = waBotMetadata.BotMetadata
+	BotAvatarMetadata                                                                                                   = waBotMetadata.BotAvatarMetadata
 	ActionLink                                                                                                          = waE2E.ActionLink
 	TemplateButton                                                                                                      = waE2E.TemplateButton
 	TemplateButton_QuickReplyButton_                                                                                    = waE2E.TemplateButton_QuickReplyButton_
@@ -451,7 +470,7 @@ type (
 const (
 	ADVEncryptionType_E2EE                                                                       = waAdv.ADVEncryptionType_E2EE
 	ADVEncryptionType_HOSTED                                                                     = waAdv.ADVEncryptionType_HOSTED
-	KeepType_UNKNOWN                                                                             = waE2E.KeepType_UNKNOWN
+	KeepType_UNKNOWN                                                                             = waE2E.KeepType_UNKNOWN_KEEP_TYPE
 	KeepType_KEEP_FOR_ALL                                                                        = waE2E.KeepType_KEEP_FOR_ALL
 	KeepType_UNDO_KEEP_FOR_ALL                                                                   = waE2E.KeepType_UNDO_KEEP_FOR_ALL
 	PeerDataOperationRequestType_UPLOAD_STICKER                                                  = waE2E.PeerDataOperationRequestType_UPLOAD_STICKER
@@ -592,10 +611,10 @@ const (
 	ForwardedNewsletterMessageInfo_UPDATE                                                        = waE2E.ContextInfo_ForwardedNewsletterMessageInfo_UPDATE
 	ForwardedNewsletterMessageInfo_UPDATE_CARD                                                   = waE2E.ContextInfo_ForwardedNewsletterMessageInfo_UPDATE_CARD
 	ForwardedNewsletterMessageInfo_LINK_CARD                                                     = waE2E.ContextInfo_ForwardedNewsletterMessageInfo_LINK_CARD
-	BotPluginMetadata_BING                                                                       = waE2E.BotPluginMetadata_BING
-	BotPluginMetadata_GOOGLE                                                                     = waE2E.BotPluginMetadata_GOOGLE
-	BotPluginMetadata_REELS                                                                      = waE2E.BotPluginMetadata_REELS
-	BotPluginMetadata_SEARCH                                                                     = waE2E.BotPluginMetadata_SEARCH
+	BotPluginMetadata_BING                                                                       = waBotMetadata.BotPluginMetadata_BING
+	BotPluginMetadata_GOOGLE                                                                     = waBotMetadata.BotPluginMetadata_GOOGLE
+	BotPluginMetadata_REELS                                                                      = waBotMetadata.BotPluginMetadata_REELS
+	BotPluginMetadata_SEARCH                                                                     = waBotMetadata.BotPluginMetadata_SEARCH
 	PaymentBackground_UNKNOWN                                                                    = waE2E.PaymentBackground_UNKNOWN
 	PaymentBackground_DEFAULT                                                                    = waE2E.PaymentBackground_DEFAULT
 	VideoMessage_NONE                                                                            = waE2E.VideoMessage_NONE

@@ -9,13 +9,13 @@ package types
 import (
 	"time"
 
-	waProto "github.com/rsanjuan87/whatsmeow/binary/proto"
+	"github.com/rsanjuan87/whatsmeow/proto/waVnameCert"
 )
 
 // VerifiedName contains verified WhatsApp business details.
 type VerifiedName struct {
-	Certificate *waProto.VerifiedNameCertificate
-	Details     *waProto.VerifiedNameCertificate_Details
+	Certificate *waVnameCert.VerifiedNameCertificate
+	Details     *waVnameCert.VerifiedNameCertificate_Details
 }
 
 // UserInfo contains info about a WhatsApp user.
@@ -56,6 +56,8 @@ type ProfilePictureInfo struct {
 	Type string `json:"type"` // The type of image. Known types include "image" (full res) and "preview" (thumbnail).
 
 	DirectPath string `json:"direct_path"` // The path to the image, probably not very useful
+
+	Hash []byte `json:"hash"` // Some kind of hash (format is unknown)
 }
 
 // ContactInfo contains the cached names of a WhatsApp user.

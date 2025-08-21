@@ -3,6 +3,13 @@ package armadillo
 import (
 	"google.golang.org/protobuf/proto"
 
+	"go.mau.fi/whatsmeow/proto/instamadilloAddMessage"
+	"go.mau.fi/whatsmeow/proto/instamadilloDeleteMessage"
+	"go.mau.fi/whatsmeow/proto/instamadilloSupplementMessage"
+	"go.mau.fi/whatsmeow/proto/waArmadilloApplication"
+	"go.mau.fi/whatsmeow/proto/waCommon"
+	"go.mau.fi/whatsmeow/proto/waConsumerApplication"
+	"go.mau.fi/whatsmeow/proto/waMultiDevice"
 	"github.com/rsanjuan87/whatsmeow/proto/waArmadilloApplication"
 	"github.com/rsanjuan87/whatsmeow/proto/waCommon"
 	"github.com/rsanjuan87/whatsmeow/proto/waConsumerApplication"
@@ -29,6 +36,10 @@ var (
 	_ MessageApplicationSub = (*waMultiDevice.MultiDevice)(nil)                 // 5
 	_ MessageApplicationSub = (*Unsupported_Voip)(nil)                          // 6
 	_ MessageApplicationSub = (*waArmadilloApplication.Armadillo)(nil)          // 7
+
+	_ MessageApplicationSub = (*instamadilloAddMessage.AddMessagePayload)(nil)
+	_ MessageApplicationSub = (*instamadilloSupplementMessage.SupplementMessagePayload)(nil)
+	_ MessageApplicationSub = (*instamadilloDeleteMessage.DeleteMessagePayload)(nil)
 )
 
 func (*Unsupported_BusinessApplication) IsMessageApplicationSub() {}

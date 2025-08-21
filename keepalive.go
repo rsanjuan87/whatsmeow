@@ -8,7 +8,7 @@ package whatsmeow
 
 import (
 	"context"
-	"math/rand"
+	"math/rand/v2"
 	"time"
 
 	waBinary "github.com/rsanjuan87/whatsmeow/binary"
@@ -32,7 +32,7 @@ func (cli *Client) keepAliveLoop(ctx context.Context) {
 	lastSuccess := time.Now()
 	var errorCount int
 	for {
-		interval := rand.Int63n(KeepAliveIntervalMax.Milliseconds()-KeepAliveIntervalMin.Milliseconds()) + KeepAliveIntervalMin.Milliseconds()
+		interval := rand.Int64N(KeepAliveIntervalMax.Milliseconds()-KeepAliveIntervalMin.Milliseconds()) + KeepAliveIntervalMin.Milliseconds()
 		select {
 		case <-time.After(time.Duration(interval) * time.Millisecond):
 			isSuccess, shouldContinue := cli.sendKeepAlive(ctx)
@@ -47,6 +47,7 @@ func (cli *Client) keepAliveLoop(ctx context.Context) {
 				if cli.EnableAutoReconnect && time.Since(lastSuccess) > KeepAliveMaxFailTime {
 					cli.Log.Debugf("Forcing reconnect due to keepalive failure")
 					cli.Disconnect()
+					cli.resetExpectedDisconnect()
 					go cli.autoReconnect()
 				}
 			} else {
